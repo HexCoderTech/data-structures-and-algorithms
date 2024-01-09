@@ -26,59 +26,35 @@ public:
     }
 
     void enqueue(T data){
-        if(start == -1 && rear == -1){
-            // queue is currently empty.
+        if (start == -1 &&  rear == -1){
             start = rear = 0;
-            array[rear] = data;
-        
-        }
-        else if (rear < size - 1){
-            if (rear + 1 != start){
-                rear++;
-                array[rear] = data;
-            }
-            else{
-                cout << "Queue already full" << endl;
-                return;
-            }
-        }
-        else if (rear == size - 1){
-            if (start != 0){
-                rear = 0;
-                array[rear] = data;
-                return;
-            }
-            else{
-                cout << "Queue already full" << endl;
-            }
-        }
-        else{
-            cout << "Unexpected scenario" << endl;
-        }
-    }
-
-    void dequeue(){
-        if(start == -1 && rear == -1){
-            cout << "Queue is empty" << endl;
+        }else if(start > 0 && rear == size-1){
+            rear = 0;
+        }else if ((rear >= start && rear < size-1) || (rear < start && rear < start - 1)){
+            rear++;
+        }else{
+            cout << "Queue is already full!" << endl;
             return;
         }
-        else if (start == size - 1){
-            if (start != rear){
-                array[start] = -1;
-                start = 0;
-            }
-        }
-        else if (start == rear){
-            array[start] = -1;
-            start = rear = -1;
-        }
-        
-        else{
-            array[start] = -1;
-            start++;
-        }
+        array[rear] = data;
     }
 
+    T dequeue(){
+        T tmpValue = array[start];
+        int tmpIndex = start;
+        if (start == -1 &&  rear == -1){
+            cout << "Queue is alread empty!" << endl;
+            return T();
+        } else if (start > rear && start == size-1){
+            start = 0;
+        }else if (start == rear && start != -1){
+            start = rear = -1;
+        }else{
+            start++;
+        }
+        array[tmpIndex] = T();
+        return tmp;
+    }
     T peek(){
         return array[start];
     }
